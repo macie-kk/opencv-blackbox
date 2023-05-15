@@ -3,13 +3,13 @@ import cv2
 import time
 from collections import deque
 import numpy as np
-import urllib.request
+import requests
 # import mediapipe as mp
 
 
 app = Flask(__name__)
 video_url = f"http://{ip_address}:{port}/video"
-stream = urllib.request.urlopen(video_url)
+stream = requests.get(video_url, stream=True)
 
 byte_buffer = bytes()
 
@@ -49,10 +49,7 @@ def detect(frame):
 def gen_frames():
     global last_minutes, next_seconds
 
-    while True:
-        # Read a chunk of data from the video stream
-        chunk = stream.read(1024)
-
+    for chunk in stream.iter_content(chunk_size=1024):
         # Append the chunk to the byte buffer
         byte_buffer += chunk
 
@@ -81,7 +78,7 @@ def gen_frames():
             # add frame in next ten seconds queue
             next_seconds.append((time.time(), frame))
 
-        yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+            yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 @app.route('/save_buffer', methods=['POST'])
