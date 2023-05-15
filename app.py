@@ -3,7 +3,7 @@ import cv2
 import time
 from collections import deque
 import numpy as np
-import mediapipe as mp
+# import mediapipe as mp
 
 
 app = Flask(__name__)
@@ -20,9 +20,9 @@ next_seconds = deque(maxlen=save_next_secs * fps)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # initialize pose estimator
-mp_drawing = mp.solutions.drawing_utils
-mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+# mp_drawing = mp.solutions.drawing_utils
+# mp_pose = mp.solutions.pose
+# pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
 
 def detect(frame):
@@ -36,10 +36,10 @@ def detect(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     # process the frame for pose detection
-    pose_results = pose.process(frame_rgb)
+    # pose_results = pose.process(frame_rgb)
 
-    # draw skeleton on the frame
-    mp_drawing.draw_landmarks(frame, pose_results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+    # # draw skeleton on the frame
+    # mp_drawing.draw_landmarks(frame, pose_results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
 
 def gen_frames():
