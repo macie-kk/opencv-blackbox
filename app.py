@@ -7,7 +7,7 @@ import mediapipe as mp
 
 
 app = Flask(__name__)
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(0)  # './videos/Piesi_Na_Pasach.MOV'
 
 save_last_mins = 5
 save_next_secs = 10
@@ -22,7 +22,7 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fronta
 # initialize pose estimator
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+pose = mp_pose.Pose(min_detection_confidence=0.1, min_tracking_confidence=0.5)
 
 
 def detect(frame):
